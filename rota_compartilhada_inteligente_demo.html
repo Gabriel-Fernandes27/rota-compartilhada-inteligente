@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Rota Compartilhada Inteligente</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;font-family:Inter,Arial,sans-serif}
+body{background:#f4f7fb;color:#172033}
+button{cursor:pointer;border:0}
+.screen{display:none;min-height:100vh}.screen.active{display:block}
+#home{background:linear-gradient(135deg,#0f2347,#1769c2);color:#fff}
+.hero{max-width:1150px;margin:auto;padding:34px 24px}
+.nav{display:flex;justify-content:space-between;align-items:center}.brand{font-size:20px;font-weight:800;display:flex;gap:10px;align-items:center}
+.logo{width:42px;height:42px;background:#fff;color:#1769c2;border-radius:12px;display:grid;place-items:center;font-size:22px}
+.nav button,.heroBtn{padding:12px 18px;border-radius:10px;background:#fff;color:#1769c2;font-weight:700}
+.heroGrid{display:grid;grid-template-columns:1.1fr .9fr;gap:50px;align-items:center;padding:90px 0}
+.hero h1{font-size:52px;line-height:1.05;margin-bottom:20px}.hero p{font-size:18px;line-height:1.6;color:#dcecff;max-width:650px}
+.heroBtn{margin-top:28px;font-size:15px}.preview{background:#fff;color:#172033;border-radius:24px;padding:20px;box-shadow:0 25px 70px #071b3d77}
+.previewTop{display:flex;justify-content:space-between;margin-bottom:15px}.miniMap{height:260px;border-radius:16px;background:repeating-linear-gradient(45deg,#e9eef4 0 22px,#f7f9fc 22px 44px);position:relative;overflow:hidden}
+.road{position:absolute;width:90%;height:9px;background:#b8c4d5;top:53%;left:5%;transform:rotate(-18deg)}.dot{position:absolute;width:16px;height:16px;background:#ef4444;border:3px solid #fff;border-radius:50%}.d1{left:18%;top:25%}.d2{left:48%;top:50%}.d3{left:76%;top:72%}.miniVan{position:absolute;left:34%;top:42%;font-size:28px;transition:1s}
+.loginBox{max-width:430px;margin:80px auto;background:#fff;padding:30px;border-radius:20px;box-shadow:0 20px 50px #0002}.loginBox h2{margin-bottom:8px}.loginBox p{color:#718096;margin-bottom:22px}
+.field{margin:12px 0}.field label{font-size:13px;font-weight:700}.field input,.field select{width:100%;padding:12px;border:1px solid #dce2eb;border-radius:9px;margin-top:6px}
+.primary{background:#1769c2;color:#fff;padding:12px 16px;border-radius:9px;font-weight:700}.secondary{background:#eaf2ff;color:#1769c2;padding:11px 15px;border-radius:9px;font-weight:700}
+.app{display:none;min-height:100vh}.app.active{display:flex}.side{width:245px;background:#102445;color:#fff;padding:22px 14px;position:fixed;left:0;top:0;bottom:0}.side .brand{margin-bottom:30px}.menu button{display:block;width:100%;padding:13px;text-align:left;background:transparent;color:#dbe6f7;border-radius:9px;margin:3px 0}.menu button:hover,.menu button.sel{background:#203b67;color:#fff}
+.content{margin-left:245px;width:calc(100% - 245px);padding:25px}.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:22px}.top p{color:#718096;margin-top:4px}.profile{background:#fff;padding:9px 14px;border-radius:12px}.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:15px}.card,.panel{background:#fff;border-radius:16px;padding:19px;box-shadow:0 5px 20px #1024450d}.card h2{margin:7px 0 3px}.muted{color:#718096;font-size:13px}.layout{display:grid;grid-template-columns:1.4fr .8fr;gap:18px;margin-top:18px}.panel h3{margin-bottom:15px}.map{height:330px;border-radius:14px;background:repeating-linear-gradient(45deg,#e9eef4 0 25px,#f8fafc 25px 50px);position:relative;overflow:hidden}.map .road{top:53%}.van{position:absolute;left:30%;top:43%;font-size:34px;transition:1.2s}.school{position:absolute;background:#16a34a;color:#fff;border-radius:10px;padding:8px}.sa{right:12%;top:18%}.sb{right:20%;bottom:12%}.stop{position:absolute;width:17px;height:17px;border-radius:50%;background:#ef4444;border:3px solid #fff}.s1{left:15%;top:25%}.s2{left:48%;top:43%}.s3{left:67%;top:67%}
+.routeItem{display:flex;gap:12px;align-items:center;padding:13px 0;border-bottom:1px solid #edf0f5}.routeItem:last-child{border-bottom:0}.time{width:45px;font-weight:800;font-size:13px}.ri{width:36px;height:36px;border-radius:50%;background:#edf4ff;display:grid;place-items:center}.routeText{flex:1}.routeText small{display:block;color:#718096;margin-top:3px}.tag{padding:5px 8px;border-radius:20px;font-size:11px;font-weight:700}.ok{background:#dcfce7;color:#15803d}.bad{background:#fee2e2;color:#b91c1c}.schoolTag{background:#e0e7ff;color:#4338ca}
+.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:15px}.notice{padding:13px;border-radius:10px;background:#eef7ff;margin-top:15px;font-size:13px}.student{display:flex;justify-content:space-between;padding:13px 0;border-bottom:1px solid #edf0f5}.tabs{display:flex;gap:8px;margin-bottom:18px}.tab{padding:10px 14px;background:#e9eef5;border-radius:9px;font-weight:700}.tab.active{background:#1769c2;color:#fff}
+.toast{position:fixed;right:20px;bottom:20px;background:#102445;color:#fff;padding:15px 18px;border-radius:12px;display:none;z-index:20;box-shadow:0 10px 30px #0003}.toast.show{display:block}
+.back{background:transparent;color:#1769c2;margin-top:15px}
+@media(max-width:900px){.heroGrid,.layout{grid-template-columns:1fr}.cards{grid-template-columns:1fr 1fr}.side{width:70px}.side .brand span,.menu button span{display:none}.content{margin-left:70px;width:calc(100% - 70px)}.hero h1{font-size:40px}}
+@media(max-width:560px){.cards{grid-template-columns:1fr}.top{align-items:flex-start}.profile{display:none}.content{padding:15px}}
+</style>
+</head>
+<body>
+
+<!-- HOME -->
+<section id="home" class="screen active">
+<div class="hero">
+<div class="nav"><div class="brand"><div class="logo">🚐</div><span>Rota Compartilhada Inteligente</span></div><button onclick="show('login')">Entrar</button></div>
+<div class="heroGrid">
+<div><h1>Transporte escolar que se adapta à sua rotina.</h1><p>Uma plataforma que conecta famílias, motoristas e escolas, acompanha a van e reorganiza a rota quando alunos não utilizam o transporte.</p><button class="heroBtn" onclick="show('login')">Começar demonstração →</button></div>
+<div class="preview"><div class="previewTop"><strong>Rota de hoje</strong><span class="tag ok">● Ativa</span></div><div class="miniMap"><div class="road"></div><div class="dot d1"></div><div class="dot d2"></div><div class="dot d3"></div><div class="miniVan">🚐</div></div><p style="margin-top:12px;color:#718096;font-size:13px">12 alunos • 2 escolas • 8 min economizados</p></div>
+</div>
+</div>
+</section>
+
+<!-- LOGIN -->
+<section id="login" class="screen">
+<div class="loginBox">
+<h2>Entrar na plataforma</h2><p>Escolha um perfil para testar a demonstração.</p>
+<div class="field"><label>Usuário</label><input value="demo@rotainteigente.com"></div>
+<div class="field"><label>Senha</label><input type="password" value="123456"></div>
+<div class="field"><label>Perfil</label><select id="profile"><option value="responsavel">Responsável</option><option value="motorista">Motorista</option><option value="admin">Administrador</option></select></div>
+<button class="primary" style="width:100%;margin-top:10px" onclick="login()">Entrar na demonstração</button>
+<button class="back" onclick="show('home')">← Voltar</button>
+</div>
+</section>
+
+<!-- APP -->
+<div id="app" class="app">
+<aside class="side">
+<div class="brand"><div class="logo">🚐</div><span>Rota Inteligente</span></div>
+<div class="menu">
+<button class="sel" onclick="page('dashboard',this)">🏠 <span>Dashboard</span></button>
+<button onclick="page('rota',this)">🗺️ <span>Minha rota</span></button>
+<button onclick="page('rastreamento',this)">🚐 <span>Rastreamento</span></button>
+<button onclick="page('alunos',this)">👨‍👩‍👧 <span>Alunos</span></button>
+<button onclick="page('escolas',this)">🏫 <span>Escolas</span></button>
+<button onclick="page('notificacoes',this)">🔔 <span>Notificações</span></button>
+<button onclick="page('relatorios',this)">📊 <span>Relatórios</span></button>
+<button onclick="logout()">↩️ <span>Sair</span></button>
+</div>
+</aside>
+<main class="content">
+<div class="top"><div><h1 id="pageTitle">Dashboard</h1><p id="subtitle">Visão geral do transporte escolar.</p></div><div class="profile">👤 <strong id="userRole">Responsável</strong></div></div>
+
+<div id="dashboard" class="view">
+<div class="cards">
+<div class="card">🚐<h2>12</h2><span class="muted">Alunos na rota</span></div>
+<div class="card">🟢<h2 id="confirmed">10</h2><span class="muted">Confirmados</span></div>
+<div class="card">🔴<h2 id="absent">2</h2><span class="muted">Ausentes</span></div>
+<div class="card">⏱️<h2 id="saved">8 min</h2><span class="muted">Tempo economizado</span></div>
+</div>
+<div class="layout">
+<div class="panel"><h3>📍 Rastreamento da van</h3><div class="map" id="mainMap"><div class="road"></div><div class="stop s1"></div><div class="stop s2"></div><div class="stop s3"></div><div class="school sa">🏫 A</div><div class="school sb">🏫 B</div><div class="van" id="van">🚐</div></div><div class="actions"><button class="primary" onclick="moveVan()">Atualizar localização</button><button class="secondary" onclick="page('rota')">Ver rota completa</button></div></div>
+<div class="panel"><h3>⏰ Confirmação de amanhã</h3><p class="muted">João utilizará o transporte?</p><div class="actions"><button class="primary" onclick="presence(true)">🟢 Sim</button><button class="secondary" onclick="presence(false)">🔴 Não</button></div><div id="confirmMsg" class="notice">Aguardando confirmação.</div></div>
+</div>
+<div class="layout">
+<div class="panel"><h3>🧠 Rota adaptativa</h3><div id="routeList"></div><div class="notice" id="routeMsg">O sistema está analisando as confirmações dos alunos.</div></div>
+<div class="panel"><h3>🔔 Últimas notificações</h3><div class="student">🚐 Van em rota <span class="muted">agora</span></div><div class="student">🧠 Rota otimizada <span class="muted">5 min</span></div><div class="student">🏫 Escola A dentro do horário <span class="muted">10 min</span></div></div>
+</div>
+</div>
+
+<div id="rota" class="view" style="display:none"><div class="panel"><h3>🧠 Rota compartilhada inteligente</h3><p class="muted">A rota é atualizada conforme presença, horários das escolas e situação do trânsito.</p><div id="fullRoute" style="margin-top:15px"></div><div class="actions"><button class="primary" onclick="simulateAbsence()">Simular ausência de Pedro</button><button class="secondary" onclick="resetRoute()">Restaurar rota</button></div></div></div>
+
+<div id="rastreamento" class="view" style="display:none"><div class="panel"><h3>🚐 Rastreamento em tempo real — simulação</h3><div class="map" style="margin-top:15px"><div class="road"></div><div class="stop s1"></div><div class="stop s2"></div><div class="stop s3"></div><div class="school sa">🏫 A</div><div class="school sb">🏫 B</div><div class="van" id="van2">🚐</div></div><div class="notice">Velocidade: 32 km/h • Próxima parada: Maria • Chegada estimada: 06:40</div><div class="actions"><button class="primary" onclick="moveVan()">Simular movimento da van</button></div></div></div>
+
+<div id="alunos" class="view" style="display:none"><div class="panel"><h3>👨‍👩‍👧 Alunos cadastrados</h3><div class="student"><span>João — Escola A</span><span class="tag ok">Confirmado</span></div><div class="student"><span>Maria — Escola A</span><span class="tag ok">Confirmado</span></div><div class="student"><span>Pedro — Escola B</span><span class="tag bad" id="pedroTag">Ausente</span></div></div></div>
+
+<div id="escolas" class="view" style="display:none"><div class="panel"><h3>🏫 Escolas atendidas</h3><div class="student"><span>Escola A</span><strong>Entrada 07:00 • Saída 12:00</strong></div><div class="student"><span>Escola B</span><strong>Entrada 07:15 • Saída 12:30</strong></div><div class="student"><span>Escola C</span><strong>Entrada 07:30 • Saída 13:00</strong></div></div></div>
+
+<div id="notificacoes" class="view" style="display:none"><div class="panel"><h3>🔔 Central de notificações</h3><div class="student">⚠️ João não embarcou <span class="muted">agora</span></div><div class="student">🚐 Van a 5 minutos do ponto <span class="muted">agora</span></div><div class="student">🧠 Rota reorganizada <span class="muted">5 min</span></div></div></div>
+
+<div id="relatorios" class="view" style="display:none"><div class="cards"><div class="card">📈<h2>94%</h2><span class="muted">Pontualidade</span></div><div class="card">🧠<h2>18 min</h2><span class="muted">Economia média</span></div><div class="card">🚐<h2>4</h2><span class="muted">Vans ativas</span></div><div class="card">🏫<h2>8</h2><span class="muted">Escolas</span></div></div></div>
+</main>
+</div>
+<div id="toast" class="toast"></div>
+
+<script>
+let role='responsavel',pos=30,optimized=true;
+const base=[
+['06:30','👦','João','Rua das Flores, 120','Confirmado','ok'],
+['06:40','👧','Maria','Av. Brasil, 540','Confirmado','ok'],
+['06:50','👦','Pedro','Rua Central, 80','Ausente','bad'],
+['07:00','🏫','Escola A','Entrada dos alunos: 07:00','Escola','schoolTag'],
+['07:15','🏫','Escola B','Entrada dos alunos: 07:15','Escola','schoolTag']
+];
+function show(id){document.querySelectorAll('.screen').forEach(x=>x.classList.remove('active'));document.getElementById(id).classList.add('active')}
+function login(){role=document.getElementById('profile').value;document.getElementById('userRole').textContent=role==='admin'?'Administrador':role==='motorista'?'Motorista':'Responsável';document.querySelectorAll('.screen').forEach(x=>x.classList.remove('active'));document.getElementById('app').classList.add('active');renderRoute()}
+function logout(){document.getElementById('app').classList.remove('active');show('home')}
+function page(id,btn){document.querySelectorAll('.view').forEach(x=>x.style.display='none');document.getElementById(id).style.display='block';document.querySelectorAll('.menu button').forEach(x=>x.classList.remove('sel'));if(btn)btn.classList.add('sel');let names={dashboard:'Dashboard',rota:'Minha rota',rastreamento:'Rastreamento',alunos:'Alunos',escolas:'Escolas',notificacoes:'Notificações',relatorios:'Relatórios'};document.getElementById('pageTitle').textContent=names[id];document.getElementById('subtitle').textContent=id==='rota'?'Rota otimizada para as escolas de hoje.':'Visão geral do transporte escolar.'}
+function renderRoute(){
+let html=base.map((r,i)=>`<div class="routeItem"><div class="time">${r[0]}</div><div class="ri">${r[1]}</div><div class="routeText"><strong>${r[2]}</strong><small>${r[3]}</small></div><span class="tag ${r[5]}">${r[4]}</span></div>`).join('');
+document.getElementById('routeList').innerHTML=html;document.getElementById('fullRoute').innerHTML=html;
+}
+function presence(ok){document.getElementById('confirmMsg').textContent=ok?'🟢 Presença confirmada! João continuará na rota.':'🔴 Ausência registrada. A parada de João será removida da rota.';toast(ok?'Presença confirmada.':'Ausência registrada.')}
+function simulateAbsence(){optimized=true;base[2][4]='Ausente';base[2][5]='bad';document.getElementById('absent').textContent='3';document.getElementById('saved').textContent='11 min';document.getElementById('routeMsg').textContent='Pedro não utilizará o transporte. A parada foi removida e a rota ganhou tempo.';document.getElementById('pedroTag').textContent='Ausente';renderRoute();toast('🧠 Rota otimizada: parada de Pedro removida.')}
+function resetRoute(){base[2][4]='Confirmado';base[2][5]='ok';document.getElementById('absent').textContent='2';document.getElementById('saved').textContent='8 min';document.getElementById('routeMsg').textContent='Rota restaurada. Todos os alunos estão previstos.';document.getElementById('pedroTag').textContent='Confirmado';renderRoute();toast('Rota restaurada.')}
+function moveVan(){pos+=12;if(pos>78)pos=15;document.getElementById('van').style.left=pos+'%';document.getElementById('van2').style.left=pos+'%';toast('📍 Localização da van atualizada.')}
+function toast(t){let e=document.getElementById('toast');e.textContent=t;e.classList.add('show');setTimeout(()=>e.classList.remove('show'),2600)}
+renderRoute();
+</script>
+</body>
+</html>
