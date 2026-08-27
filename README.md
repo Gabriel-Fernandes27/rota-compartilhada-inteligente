@@ -1,0 +1,1 @@
+# rota-compartilhada-inteligente
