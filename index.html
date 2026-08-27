@@ -6,108 +6,1254 @@
 <title>Rota Compartilhada Inteligente</title>
 
 <style>
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-    font-family: Inter, Arial, sans-serif;
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
 }
 
-body {
-    background: #f4f7fb;
-    color: #172033;
+body{
+    font-family:Arial,Helvetica,sans-serif;
+    background:#f4f7fb;
+    color:#172033;
 }
 
-button {
-    cursor: pointer;
-    border: 0;
+button{
+    border:0;
+    cursor:pointer;
+    font-family:inherit;
 }
 
-.screen {
-    display: none;
-    min-height: 100vh;
+.hidden{
+    display:none!important;
 }
 
-.screen.active {
-    display: block;
+/* ================= HOME ================= */
+
+#home{
+    min-height:100vh;
+    background:linear-gradient(135deg,#0d2347,#1769c2);
+    color:white;
 }
 
-/* HOME */
-
-#home {
-    background: linear-gradient(135deg, #0f2347, #1769c2);
-    color: #fff;
+.container{
+    max-width:1150px;
+    margin:auto;
+    padding:25px;
 }
 
-.hero {
-    max-width: 1150px;
-    margin: auto;
-    padding: 34px 24px;
+.navbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
 }
 
-.nav {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+.logo-area{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    font-weight:bold;
+    font-size:19px;
 }
 
-.brand {
-    font-size: 20px;
-    font-weight: 800;
-    display: flex;
-    gap: 10px;
-    align-items: center;
+.logo{
+    width:44px;
+    height:44px;
+    background:white;
+    color:#1769c2;
+    border-radius:12px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-size:22px;
 }
 
-.logo {
-    width: 42px;
-    height: 42px;
-    background: #fff;
-    color: #1769c2;
-    border-radius: 12px;
-    display: grid;
-    place-items: center;
-    font-size: 22px;
+.nav-button{
+    background:white;
+    color:#1769c2;
+    padding:12px 20px;
+    border-radius:10px;
+    font-weight:bold;
 }
 
-.nav button,
-.heroBtn {
-    padding: 12px 18px;
-    border-radius: 10px;
-    background: #fff;
-    color: #1769c2;
-    font-weight: 700;
+.hero{
+    display:grid;
+    grid-template-columns:1.1fr .9fr;
+    gap:60px;
+    align-items:center;
+    padding:90px 0;
 }
 
-.heroGrid {
-    display: grid;
-    grid-template-columns: 1.1fr .9fr;
-    gap: 50px;
-    align-items: center;
-    padding: 90px 0;
+.hero h1{
+    font-size:52px;
+    line-height:1.05;
+    margin-bottom:22px;
 }
 
-.hero h1 {
-    font-size: 52px;
-    line-height: 1.05;
-    margin-bottom: 20px;
+.hero p{
+    color:#dcecff;
+    font-size:18px;
+    line-height:1.6;
 }
 
-.hero p {
-    font-size: 18px;
-    line-height: 1.6;
-    color: #dcecff;
-    max-width: 650px;
+.hero-button{
+    margin-top:28px;
+    background:white;
+    color:#1769c2;
+    padding:14px 22px;
+    border-radius:10px;
+    font-weight:bold;
 }
 
-.heroBtn {
-    margin-top: 28px;
-    font-size: 15px;
+.preview{
+    background:white;
+    color:#172033;
+    border-radius:24px;
+    padding:20px;
+    box-shadow:0 25px 70px #0005;
 }
 
-.preview {
-    background: #fff;
-    color: #172033;
+.preview-title{
+    display:flex;
+    justify-content:space-between;
+    margin-bottom:15px;
+}
+
+.map{
+    height:270px;
+    position:relative;
+    overflow:hidden;
+    border-radius:15px;
+    background:
+    repeating-linear-gradient(
+        45deg,
+        #e9eef4 0 22px,
+        #f7f9fc 22px 44px
+    );
+}
+
+.road{
+    position:absolute;
+    width:90%;
+    height:9px;
+    background:#aebbd0;
+    top:52%;
+    left:5%;
+    transform:rotate(-18deg);
+}
+
+.point{
+    position:absolute;
+    width:20px;
+    height:20px;
+    border-radius:50%;
+    background:#1769c2;
+    border:3px solid white;
+}
+
+.p1{left:15%;top:25%}
+.p2{left:45%;top:50%}
+.p3{left:72%;top:30%}
+
+.van{
+    position:absolute;
+    left:30%;
+    top:50%;
+    width:38px;
+    height:25px;
+    background:#ef4444;
+    border:3px solid white;
+    border-radius:8px;
+    transform:translateY(-50%);
+    transition:left .5s;
+}
+
+/* ================= LOGIN ================= */
+
+#login{
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+}
+
+.login-box{
+    width:100%;
+    max-width:430px;
+    background:white;
+    padding:30px;
+    border-radius:20px;
+    box-shadow:0 20px 50px #0002;
+}
+
+.login-box h2{
+    margin-bottom:8px;
+}
+
+.login-box p{
+    color:#718096;
+    margin-bottom:20px;
+}
+
+.field{
+    margin-bottom:15px;
+}
+
+.field label{
+    display:block;
+    font-size:13px;
+    font-weight:bold;
+    margin-bottom:6px;
+}
+
+.field input,
+.field select{
+    width:100%;
+    padding:13px;
+    border:1px solid #d8e0eb;
+    border-radius:9px;
+    outline:none;
+}
+
+.field input:focus,
+.field select:focus{
+    border-color:#1769c2;
+}
+
+.primary{
+    background:#1769c2;
+    color:white;
+    padding:12px 18px;
+    border-radius:9px;
+    font-weight:bold;
+}
+
+.secondary{
+    background:#eaf2ff;
+    color:#1769c2;
+    padding:12px 18px;
+    border-radius:9px;
+    font-weight:bold;
+}
+
+.back{
+    background:transparent;
+    color:#1769c2;
+    margin-top:15px;
+}
+
+/* ================= APP ================= */
+
+#app{
+    display:none;
+    min-height:100vh;
+}
+
+#app.active{
+    display:block;
+}
+
+.sidebar{
+    position:fixed;
+    left:0;
+    top:0;
+    bottom:0;
+    width:245px;
+    background:#102445;
+    color:white;
+    padding:22px 14px;
+}
+
+.sidebar-brand{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    font-weight:bold;
+    margin-bottom:30px;
+}
+
+.menu{
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+}
+
+.menu button{
+    width:100%;
+    padding:13px;
+    text-align:left;
+    background:transparent;
+    color:#c6d4e9;
+    border-radius:10px;
+}
+
+.menu button:hover{
+    background:#17345f;
+}
+
+.menu button.active{
+    background:#1769c2;
+    color:white;
+    font-weight:bold;
+}
+
+.main{
+    margin-left:245px;
+    padding:25px;
+}
+
+.topbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:25px;
+}
+
+.topbar p{
+    color:#718096;
+    margin-top:5px;
+}
+
+.role{
+    background:#1769c2;
+    color:white;
+    padding:10px 15px;
+    border-radius:10px;
+    font-weight:bold;
+}
+
+/* ================= PÁGINAS ================= */
+
+.page{
+    display:none;
+}
+
+.page.active{
+    display:block;
+}
+
+.cards{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:18px;
+}
+
+.card{
+    background:white;
+    padding:20px;
+    border-radius:16px;
+    box-shadow:0 8px 25px #10244512;
+}
+
+.card h2{
+    color:#1769c2;
+    font-size:28px;
+    margin:8px 0;
+}
+
+.muted{
+    color:#718096;
+    font-size:14px;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:20px;
+    margin-top:20px;
+}
+
+.panel{
+    background:white;
+    border-radius:16px;
+    padding:20px;
+    box-shadow:0 8px 25px #10244512;
+    margin-bottom:20px;
+}
+
+.panel h3{
+    margin-bottom:15px;
+}
+
+.actions{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+    margin-top:15px;
+}
+
+.route-item{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    padding:13px 0;
+    border-bottom:1px solid #edf0f5;
+}
+
+.route-item:last-child{
+    border-bottom:0;
+}
+
+.time{
+    width:45px;
+    font-weight:bold;
+}
+
+.icon{
+    width:30px;
+    text-align:center;
+    font-size:19px;
+}
+
+.route-text{
+    flex:1;
+}
+
+.route-text strong{
+    display:block;
+}
+
+.route-text small{
+    color:#718096;
+}
+
+.tag{
+    padding:5px 9px;
+    border-radius:6px;
+    font-size:11px;
+    font-weight:bold;
+}
+
+.green{
+    background:#dcfce7;
+    color:#15803d;
+}
+
+.red{
+    background:#fee2e2;
+    color:#991b1b;
+}
+
+.yellow{
+    background:#fef3c7;
+    color:#92400e;
+}
+
+.student{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:13px 0;
+    border-bottom:1px solid #eee;
+}
+
+.student:last-child{
+    border-bottom:0;
+}
+
+.notice{
+    margin-top:15px;
+    padding:14px;
+    border-radius:10px;
+    background:#eef7ff;
+    color:#1769c2;
+    font-size:14px;
+}
+
+/* ================= TOAST ================= */
+
+#toast{
+    position:fixed;
+    right:20px;
+    bottom:20px;
+    background:#102445;
+    color:white;
+    padding:15px 20px;
+    border-radius:12px;
+    display:none;
+    z-index:100;
+    box-shadow:0 10px 30px #0004;
+}
+
+#toast.show{
+    display:block;
+}
+
+/* ================= MOBILE ================= */
+
+@media(max-width:900px){
+
+    .hero{
+        grid-template-columns:1fr;
+    }
+
+    .cards{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .sidebar{
+        width:70px;
+    }
+
+    .sidebar-brand span,
+    .menu span{
+        display:none;
+    }
+
+    .main{
+        margin-left:70px;
+    }
+
+    .grid{
+        grid-template-columns:1fr;
+    }
+}
+
+@media(max-width:600px){
+
+    .hero h1{
+        font-size:38px;
+    }
+
+    .cards{
+        grid-template-columns:1fr;
+    }
+
+    .main{
+        padding:15px;
+    }
+
+    .topbar{
+        align-items:flex-start;
+    }
+
+    .role{
+        display:none;
+    }
+
+    .route-item{
+        gap:6px;
+    }
+
+    .route-item .tag{
+        font-size:9px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- ================= HOME ================= -->
+
+<section id="home">
+
+<div class="container">
+
+    <div class="navbar">
+
+        <div class="logo-area">
+            <div class="logo">🚐</div>
+            <span>Rota Compartilhada Inteligente</span>
+        </div>
+
+        <button
+            class="nav-button"
+            id="btnEntrar"
+        >
+            Entrar
+        </button>
+
+    </div>
+
+    <div class="hero">
+
+        <div>
+
+            <h1>
+                Transporte escolar que se adapta à sua rotina.
+            </h1>
+
+            <p>
+                Uma plataforma que conecta famílias,
+                motoristas e escolas, acompanha a van
+                e reorganiza a rota quando alunos não
+                utilizam o transporte.
+            </p>
+
+            <button
+                class="hero-button"
+                id="btnComecar"
+            >
+                Começar agora
+            </button>
+
+        </div>
+
+        <div class="preview">
+
+            <div class="preview-title">
+                <strong>Rota de hoje</strong>
+                <span class="tag green">● Ativa</span>
+            </div>
+
+            <div class="map">
+
+                <div class="road"></div>
+
+                <div class="point p1"></div>
+                <div class="point p2"></div>
+                <div class="point p3"></div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+</section>
+
+
+<!-- ================= LOGIN ================= -->
+
+<section id="login" class="hidden">
+
+<div class="login-box">
+
+    <h2>Entrar na plataforma</h2>
+
+    <p>
+        Escolha um perfil para testar a demonstração.
+    </p>
+
+    <div class="field">
+
+        <label>Usuário</label>
+
+        <input
+            id="usuario"
+            type="email"
+            value="demo@rotaintegente.com"
+        >
+
+    </div>
+
+    <div class="field">
+
+        <label>Senha</label>
+
+        <input
+            id="senha"
+            type="password"
+            value="123456"
+        >
+
+    </div>
+
+    <div class="field">
+
+        <label>Perfil</label>
+
+        <select id="perfil">
+
+            <option value="responsavel">
+                Responsável
+            </option>
+
+            <option value="motorista">
+                Motorista
+            </option>
+
+            <option value="admin">
+                Administrador
+            </option>
+
+        </select>
+
+    </div>
+
+    <button
+        class="primary"
+        style="width:100%"
+        id="btnLogin"
+    >
+        Entrar na demonstração
+    </button>
+
+    <button
+        class="back"
+        id="btnVoltar"
+    >
+        ← Voltar
+    </button>
+
+</div>
+
+</section>
+
+
+<!-- ================= APLICATIVO ================= -->
+
+<section id="app">
+
+<aside class="sidebar">
+
+    <div class="sidebar-brand">
+
+        <div class="logo">
+            🚐
+        </div>
+
+        <span>
+            Rota Inteligente
+        </span>
+
+    </div>
+
+    <nav class="menu">
+
+        <button class="active" data-page="dashboard">
+            🏠 <span>Dashboard</span>
+        </button>
+
+        <button data-page="rota">
+            🗺️ <span>Minha rota</span>
+        </button>
+
+        <button data-page="rastreamento">
+            🚐 <span>Rastreamento</span>
+        </button>
+
+        <button data-page="alunos">
+            👨‍👩‍👧 <span>Alunos</span>
+        </button>
+
+        <button data-page="escolas">
+            🏫 <span>Escolas</span>
+        </button>
+
+        <button data-page="notificacoes">
+            🔔 <span>Notificações</span>
+        </button>
+
+        <button data-page="relatorios">
+            📊 <span>Relatórios</span>
+        </button>
+
+        <button id="btnSair">
+            ↩️ <span>Sair</span>
+        </button>
+
+    </nav>
+
+</aside>
+
+
+<main class="main">
+
+<div class="topbar">
+
+    <div>
+
+        <h1 id="titulo">
+            Dashboard
+        </h1>
+
+        <p id="subtitulo">
+            Visão geral do transporte escolar.
+        </p>
+
+    </div>
+
+    <div class="role">
+        👤 <span id="nomePerfil">Responsável</span>
+    </div>
+
+</div>
+
+
+<!-- ================= DASHBOARD ================= -->
+
+<div
+    id="dashboard"
+    class="page active"
+>
+
+    <div class="cards">
+
+        <div class="card">
+            🚐
+            <h2>12</h2>
+            <span class="muted">
+                Alunos na rota
+            </span>
+        </div>
+
+        <div class="card">
+            🟢
+            <h2 id="confirmados">10</h2>
+            <span class="muted">
+                Confirmados
+            </span>
+        </div>
+
+        <div class="card">
+            🔴
+            <h2 id="ausentes">2</h2>
+            <span class="muted">
+                Ausentes
+            </span>
+        </div>
+
+        <div class="card">
+            ⏱️
+            <h2 id="tempo">8 min</h2>
+            <span class="muted">
+                Tempo economizado
+            </span>
+        </div>
+
+    </div>
+
+
+    <div class="grid">
+
+        <div class="panel">
+
+            <h3>
+                📍 Rastreamento da van
+            </h3>
+
+            <div class="map">
+
+                <div class="road"></div>
+
+                <div class="point p1"></div>
+                <div class="point p2"></div>
+                <div class="point p3"></div>
+
+                <div
+                    class="van"
+                    id="van"
+                ></div>
+
+            </div>
+
+            <div class="actions">
+
+                <button
+                    class="primary"
+                    id="btnMover1"
+                >
+                    📍 Atualizar posição
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <div class="panel">
+
+            <h3>
+                ⏰ Confirmação de amanhã
+            </h3>
+
+            <p>
+                João utilizará o transporte?
+            </p>
+
+            <div class="actions">
+
+                <button
+                    class="primary"
+                    id="btnSim"
+                >
+                    🟢 Sim
+                </button>
+
+                <button
+                    class="secondary"
+                    id="btnNao"
+                >
+                    🔴 Não
+                </button>
+
+            </div>
+
+            <div
+                id="mensagemPresenca"
+                class="notice"
+            >
+                Nenhuma confirmação realizada.
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="grid">
+
+        <div class="panel">
+
+            <h3>
+                🧠 Rota adaptativa
+            </h3>
+
+            <div id="rotaDashboard"></div>
+
+            <div
+                class="notice"
+                id="mensagemRota"
+            >
+                O sistema está analisando as confirmações dos alunos.
+            </div>
+
+        </div>
+
+
+        <div class="panel">
+
+            <h3>
+                🔔 Últimas notificações
+            </h3>
+
+            <div class="student">
+                🚐 Van em rota
+                <span class="muted">agora</span>
+            </div>
+
+            <div class="student">
+                🧠 Rota otimizada
+                <span class="muted">5 min</span>
+            </div>
+
+            <div class="student">
+                🟢 João confirmou
+                <span class="muted">1h</span>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- ================= ROTA ================= -->
+
+<div
+    id="rota"
+    class="page"
+>
+
+    <div class="panel">
+
+        <h3>
+            🧠 Minha rota
+        </h3>
+
+        <p class="muted">
+            A rota pode ser reorganizada conforme
+            as confirmações dos alunos.
+        </p>
+
+        <div id="rotaCompleta"></div>
+
+        <div class="actions">
+
+            <button
+                class="primary"
+                id="btnSimular"
+            >
+                🧠 Simular ausência
+            </button>
+
+            <button
+                class="secondary"
+                id="btnResetar"
+            >
+                ↩️ Resetar
+            </button>
+
+            <button
+                class="secondary"
+                id="btnMover2"
+            >
+                🚐 Mover van
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- ================= RASTREAMENTO ================= -->
+
+<div
+    id="rastreamento"
+    class="page"
+>
+
+    <div class="panel">
+
+        <h3>
+            🚐 Rastreamento da van
+        </h3>
+
+        <p class="muted">
+            Demonstração de localização em tempo real.
+        </p>
+
+        <div class="map">
+
+            <div class="road"></div>
+
+            <div class="point p1"></div>
+            <div class="point p2"></div>
+            <div class="point p3"></div>
+
+            <div
+                class="van"
+                id="van2"
+            ></div>
+
+        </div>
+
+        <div class="actions">
+
+            <button
+                class="primary"
+                id="btnMover3"
+            >
+                📍 Atualizar posição
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- ================= ALUNOS ================= -->
+
+<div
+    id="alunos"
+    class="page"
+>
+
+    <div class="panel">
+
+        <h3>
+            👨‍👩‍👧 Alunos cadastrados
+        </h3>
+
+        <div class="student">
+
+            <span>
+                João — Escola A
+            </span>
+
+            <span
+                id="statusJoao"
+                class="tag green"
+            >
+                Confirmado
+            </span>
+
+        </div>
+
+        <div class="student">
+
+            <span>
+                Maria — Escola A
+            </span>
+
+            <span class="tag green">
+                Confirmado
+            </span>
+
+        </div>
+
+        <div class="student">
+
+            <span>
+                Pedro — Escola B
+            </span>
+
+            <span class="tag red">
+                Ausente
+            </span>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- ================= ESCOLAS ================= -->
+
+<div
+    id="escolas"
+    class="page"
+>
+
+    <div class="panel">
+
+        <h3>
+            🏫 Escolas atendidas
+        </h3>
+
+        <div class="student">
+
+            <span>
+                Escola A
+            </span>
+
+            <strong>
+                Entrada 07:00 • Saída 12:00
+            </strong>
+
+        </div>
+
+        <div class="student">
+
+            <span>
+                Escola B
+            </span>
+
+            <strong>
+                Entrada 07:15 • Saída 12:15
+            </strong>
+
+        </div>
+
+        <div class="student">
+
+            <span>
+                Escola C
+            </span>
+
+            <strong>
+                Entrada 07:30 • Saída 12:30
+            </strong>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- ================= NOTIFICAÇÕES ================= -->
+
+<div
+    id="notificacoes"
+    class="page"
+>
+
+    <div class="panel">
+
+        <h3>
+            🔔 Central de notificações
+        </h3>
+
+        <div class="student">
+            ⚠️ João não embarcou
+            <span class="muted">agora</span>
+        </div>
+
+        <div class="student">
+            ✅ Rota otimizada
+            <span class="muted">2 min</span>
+        </div>
+
+        <div class="student">
+            📍 Van chegando
+            <span class="muted">5 min</span>
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- ================= RELATÓRIOS ================= -->
+
+<div
+    id="relatorios"
+    class="page"
+>
+
+    <div class="cards">
+
+        <div class="card">
+            📈
+            <h2>94%</h2>
+            <span class="muted">
+                Pontualidade
+            </span>
+        </div>
+
+        <div class="card">
+            🧠
+            <h2 id="relatorioTempo">
+                18 min
+            </h2>
+            <span class="muted">
+                Economia média
+            </span>
+        </div>
+
+        <div class="card">
+            👥
+            <h2>142</h2>
+            <span class="muted">
+                Alunos atendidos
+            </span>
+        </div>
+
+        <div class="card">
+            🚐
+            <h2>12</h2>
+            <span class="muted">
+                Vans ativas
+            </span>
+        </div>
+
+    </div>
+
+</div>
+
+</main>
+
+</section>
+
+
+<div id="toast"></div>
+
+
+<script>
+
+document.addEventListener("DOMContentLoaded", function(){
+
+    let posicao = 30;
+    let ausenciaSimulada = false;
+
+
+    const rota = [
+
+        {
+            hora:"06:30",
+             color: #172033;
     border-radius: 24px;
     padding: 20px;
     box-shadow: 0 25px 70px #071b3d77;
